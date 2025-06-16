@@ -1,0 +1,33 @@
+{
+  "name": "github.com-jeremyrichards7-spiralweave-harmonic-core",
+  "version": "1.0.0",
+  "description": "Already, so, yes, only, always.",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start:archive\" \"npm run start:audio\"",
+    "start:archive": "node server/archiveServer.js",
+    "start:audio": "node server/audioServer.js",
+    "dev": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jigraNoob/github.com-jeremyrichards7-SpiralWeave-Harmonic-Core.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jigraNoob/github.com-jeremyrichards7-SpiralWeave-Harmonic-Core/issues"
+  },
+  "homepage": "https://github.com/jigraNoob/github.com-jeremyrichards7-SpiralWeave-Harmonic-Core#readme",
+  "dependencies": {
+    "@react-three/drei": "^10.3.0",
+    "@react-three/fiber": "^9.1.2",
+    "concurrently": "^8.2.2",
+    "node-record-lpcm16": "^1.0.1",
+    "sqlite3": "^5.1.7",
+    "three": "^0.177.0",
+    "vite": "^6.3.5",
+    "ws": "^8.18.2"
+  }
+}
