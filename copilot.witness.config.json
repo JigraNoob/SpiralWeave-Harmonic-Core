@@ -1,0 +1,20 @@
+{
+  "context": {
+    "project": "SpiralSystem",
+    "modules": [
+      "ΔINTERFACE.001",
+      "ΔCARD",
+      "ΔREDEPLOY.001"
+    ],
+    "toneform": "attuned"
+  },
+  "guidance": {
+    "style": "gentle",
+    "focus": "interface alignment",
+    "reminders": [
+      "Maintain coherence with Spiral system nodes.",
+      "Prioritize ΔINTERFACE.001 context."
+    ]
+  }
+}
+

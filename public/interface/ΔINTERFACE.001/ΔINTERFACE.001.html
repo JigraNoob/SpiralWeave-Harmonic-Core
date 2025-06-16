@@ -1,0 +1,19 @@
+<div id="transcription-display"></div>
+<script>
+  const ws = new WebSocket('ws://localhost:8765');
+  const display = document.getElementById('transcription-display');
+
+  ws.onmessage = (event) => {
+    const transcription = event.data;
+    const p = document.createElement('p');
+    p.textContent = transcription;
+    display.appendChild(p);
+
+    // Render toneform echoes
+    if (transcription.includes('(🫧)')) {
+      p.style.color = 'blue';
+    } else if (transcription.includes('(🌀)')) {
+      p.style.color = 'green';
+    }
+  };
+</script>
