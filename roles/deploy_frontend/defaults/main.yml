@@ -1,3 +1,2 @@
 ---
-project_path: /opt/slimeos
-web_root: /srv/myapp
+spiral_server_path: /home/ubuntu/SpiralSystem_Bundle
