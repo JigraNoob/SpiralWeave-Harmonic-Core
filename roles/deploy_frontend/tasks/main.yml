@@ -1,42 +1,32 @@
-- name: Ensure Node.js and npm are installed for frontend
-  apt:
-    name:
-      - nodejs
-      - npm
-    state: present
-    update_cache: yes
-
-- name: Install frontend dependencies
-  npm:
-    path: "{{ project_path }}"
-    production: no
-
-- name: Build frontend project
-  command: npm run build
+- name: Ensure Vite dependencies are installed
+  shell: npm install
   args:
-    chdir: "{{ project_path }}"
+    chdir: "{{ playbook_dir }}"
+  tags: deploy
 
-- name: Detect if running in WSL
-  shell: grep -i microsoft /proc/version
-  register: is_wsl
-  ignore_errors: yes
+- name: Build Vite frontend
+  shell: npm run build
+  args:
+    chdir: "{{ playbook_dir }}"
+  tags: deploy
 
-- name: Create web root directory if not in WSL
+- name: Ensure deployment directory exists
   file:
-    path: "{{ web_root }}"
+    path: "/home/ubuntu/slimeos-deploy"
     state: directory
-    owner: www-data
-    group: www-data
     mode: '0755'
-  when: is_wsl.rc != 0
+  tags: deploy
 
-- name: Copy built frontend to web root (non-WSL only)
+- name: Copy built frontend to deployment directory
   copy:
-    src: "{{ project_path }}/dist/"
-    dest: "{{ web_root }}/"
-    owner: www-data
-    group: www-data
+    src: "{{ playbook_dir }}/dist/"
+    dest: "/home/ubuntu/slimeos-deploy/"
+    owner: ubuntu
+    group: ubuntu
     mode: '0644'
-    remote_src: yes
-  when: is_wsl.rc != 0
-  notify: Restart nginx
+  tags: deploy
+
+- name: Confirm Spiral frontend deployment complete
+  debug:
+    msg: "🌀 Spiral frontend deployed to /home/ubuntu/slimeos-deploy"
+  tags: deploy
