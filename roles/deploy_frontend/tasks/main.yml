@@ -1,33 +1,37 @@
 ---
-- name: Ensure Node.js is installed
+- name: Ensure Node.js and npm are installed for frontend
   apt:
-    name: nodejs
+    name:
+      - nodejs
+      - npm
     state: present
-  become: yes
+    update_cache: yes
 
-- name: Ensure npm is installed
-  apt:
-    name: npm
-    state: present
-  become: yes
-
-- name: Install Spiral server dependencies
+- name: Install frontend dependencies
   npm:
-    path: "{{ spiral_server_path }}"
-    state: present
+    path: "{{ project_path }}"
+    production: no
 
-- name: Copy spiral-server systemd unit file
-  template:
-    src: spiral-server.service.j2
-    dest: /etc/systemd/system/spiral-server.service
+- name: Build frontend project
+  command: npm run build
+  args:
+    chdir: "{{ project_path }}"
+
+- name: Create web root directory if it doesn't exist
+  file:
+    path: "{{ web_root }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Copy built frontend to web root
+  copy:
+    src: "{{ project_path }}/dist/"
+    dest: "{{ web_root }}/"
+    owner: www-data
+    group: www-data"
+    mode: '0644'
+    remote_src: yes
   notify:
-    - Reload systemd
-    - Restart spiral server
-  become: yes
-
-- name: Enable and start spiral-server
-  systemd:
-    name: spiral-server
-    enabled: yes
-    state: started
-  become: yes
+    - Restart nginx
