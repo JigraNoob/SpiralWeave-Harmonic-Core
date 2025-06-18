@@ -1,2 +1,2 @@
 [slimeos_servers]
-localhost ansible_connection=local
+172.21.60.39 ansible_user=ubuntu
