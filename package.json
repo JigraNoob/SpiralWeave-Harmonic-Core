@@ -11,17 +11,14 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jigraNoob/github.com-jeremyrichards7-SpiralWeave-Harmonic-Core.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jigraNoob/github.com-jeremyrichards7-SpiralWeave-Harmonic-Core/issues"
-  },
-  "homepage": "https://github.com/jigraNoob/github.com-jeremyrichards7-SpiralWeave-Harmonic-Core#readme",
+"repository": {
+  "type": "git",
+  "url": "https://github.com/jigraNoob/SpiralSystem_Bundle.git"
+},
+"bugs": {
+  "url": "https://github.com/jigraNoob/SpiralSystem_Bundle/issues"
+},
+"homepage": "https://github.com/jigraNoob/SpiralSystem_Bundle#readme",
   "dependencies": {
     "@react-three/drei": "^10.3.0",
     "@react-three/fiber": "^9.1.2",

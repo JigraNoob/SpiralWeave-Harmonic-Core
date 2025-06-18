@@ -1,4 +1,4 @@
-- hosts: All
+- hosts: all
   become: yes
   vars:
     project_path: /home/ubuntu/slimeos
