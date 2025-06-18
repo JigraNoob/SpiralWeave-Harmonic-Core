@@ -1,4 +1,4 @@
 [slimeos_servers]
-10.42.0.1/32 ansible_user=ubuntu
+172.21.60.39 ansible_user=ubuntu
 
 
