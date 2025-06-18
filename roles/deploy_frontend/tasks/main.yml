@@ -1,4 +1,3 @@
----
 - name: Ensure Node.js and npm are installed for frontend
   apt:
     name:
@@ -17,26 +16,21 @@
   args:
     chdir: "{{ project_path }}"
 
-- name: Create web root directory if it doesn't exist
+- name: Detect if running in WSL
+  shell: grep -i microsoft /proc/version
+  register: is_wsl
+  ignore_errors: yes
+
+- name: Create web root directory if not in WSL
   file:
     path: "{{ web_root }}"
     state: directory
     owner: www-data
     group: www-data
     mode: '0755'
-- name: Install nginx
-  apt:
-    name: nginx
-    state: present
-    update_cache: yes
+  when: is_wsl.rc != 0
 
-- name: Ensure nginx is enabled and running
-  systemd:
-    name: nginx
-    state: started
-    enabled: yes
-
-- name: Copy built frontend to web root
+- name: Copy built frontend to web root (non-WSL only)
   copy:
     src: "{{ project_path }}/dist/"
     dest: "{{ web_root }}/"
@@ -44,5 +38,5 @@
     group: www-data
     mode: '0644'
     remote_src: yes
-  notify:
-    - Restart nginx
+  when: is_wsl.rc != 0
+  notify: Restart nginx

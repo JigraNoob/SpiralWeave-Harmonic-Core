@@ -8,3 +8,9 @@
     name: spiral-server
     state: restarted
   become: yes
+
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted
+  when: is_wsl.rc != 0
