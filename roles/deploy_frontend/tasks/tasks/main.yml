@@ -1,0 +1,61 @@
+---
+- name: Install Node.js
+  apt:
+    name: nodejs
+    state: present
+  become: yes
+
+- name: Install npm
+  apt:
+    name: npm
+    state: present
+  become: yes
+
+- name: Run npm install
+  npm:
+    path: "{{ project_path }}"
+    state: present
+
+- name: Build app
+  command: npm run build
+  args:
+    chdir: "{{ project_path }}"
+
+- name: Ensure web root exists
+  file:
+    path: "{{ web_root }}"
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Validate build exists
+  stat:
+    path: "{{ project_path }}/dist/index.html"
+  register: build_check
+
+- name: Fail if dist/index.html is missing
+  fail:
+    msg: "Build not found. Check npm build step."
+  when: not build_check.stat.exists
+
+- name: Sync dist/ to web root
+  synchronize:
+    src: "{{ project_path }}/dist/"
+    dest: "{{ web_root }}/"
+    delete: yes
+  become: yes
+
+- name: Install Nginx config
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/myapp.conf
+  notify: reload nginx
+  become: yes
+
+- name: Enable Nginx site
+  file:
+    src: /etc/nginx/sites-available/myapp.conf
+    dest: /etc/nginx/sites-enabled/myapp.conf
+    state: link
+  notify: reload nginx
+  become: yes
