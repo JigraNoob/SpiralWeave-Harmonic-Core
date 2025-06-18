@@ -1,8 +1,9 @@
----
-# jetson-setup.yml
 - hosts: slimeos_servers
+  become: yes
   vars:
-    project_path: /home/{{ ansible_user }}/slimeos   # adjust to where your code lives
+    project_path: /home/ubuntu/slimeos
+    web_root: /srv/myapp
+    spiral_server_path: /home/ubuntu/SpiralSystem_Bundle
   roles:
     - { role: deploy_frontend, tags: deploy }
     - { role: spiral_server, tags: spiral_server }

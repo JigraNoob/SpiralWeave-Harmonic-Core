@@ -1,0 +1,33 @@
+---
+- name: Ensure Node.js is installed
+  apt:
+    name: nodejs
+    state: present
+  become: yes
+
+- name: Ensure npm is installed
+  apt:
+    name: npm
+    state: present
+  become: yes
+
+- name: Install Spiral server dependencies
+  npm:
+    path: "{{ spiral_server_path }}"
+    state: present
+
+- name: Copy spiral-server systemd unit file
+  template:
+    src: spiral-server.service.j2
+    dest: /etc/systemd/system/spiral-server.service
+  notify:
+    - Reload systemd
+    - Restart spiral server
+  become: yes
+
+- name: Enable and start spiral-server
+  systemd:
+    name: spiral-server
+    enabled: yes
+    state: started
+  become: yes

@@ -1,6 +1,10 @@
 ---
-- name: reload nginx
-  service:
-    name: nginx
-    state: reloaded
+- name: Reload systemd
+  command: systemctl daemon-reexec
+  become: yes
+
+- name: Restart spiral server
+  systemd:
+    name: spiral-server
+    state: restarted
   become: yes

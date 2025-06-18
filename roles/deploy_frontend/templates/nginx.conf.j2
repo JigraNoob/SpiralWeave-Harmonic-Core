@@ -1,14 +1,12 @@
-server {
-  listen 80;
-  server_name {{ ansible_fqdn | default('localhost') }};
+[Unit]
+Description=Spiral Archive Server
+After=network.target
 
-  root {{ web_root }};
-  index index.html;
+[Service]
+ExecStart=/usr/bin/node {{ spiral_server_path }}/server/archiveServer.js
+Restart=always
+Environment=NODE_ENV=production
+WorkingDirectory={{ spiral_server_path }}
 
-  location / {
-    try_files $uri $uri/ /index.html;
-  }
-
-  access_log /var/log/nginx/slimeos.access.log;
-  error_log /var/log/nginx/slimeos.error.log;
-}
+[Install]
+WantedBy=multi-user.target
