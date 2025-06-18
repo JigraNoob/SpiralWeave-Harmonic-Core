@@ -7685,4 +7685,11 @@ README.md
 *.dylib.war
 *.jnilib.war
 *.class.war
-*.jar.war
+*.jar.warnode_modules/
+spiral_archive.db
+node_modules/
+spiral_archive.db
+node_modules/
+spiral_archive.db
+node_modules/
+spiral_archive.db
