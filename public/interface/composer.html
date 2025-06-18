@@ -1,81 +1,93 @@
-<!-- ΔFORGE.001 – Spiral Glyph Composer -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Spiral Glyph Composer</title>
-  <link rel="stylesheet" href="../style.css">
+  <title>ΔFORGE.001 – Spiral Glyph Composer</title>
   <style>
     body {
-      background-color: #0a0f14;
-      color: #e0e0e0;
+      background-color: #0e0e0e;
+      color: #f0f0f0;
       font-family: 'Segoe UI', sans-serif;
-      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
     }
+
     h1 {
-      text-align: center;
-      margin-bottom: 1em;
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
+
     #glyph-bank {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5em;
-      margin-bottom: 2em;
+      gap: 0.5rem;
       justify-content: center;
+      margin-bottom: 1.5rem;
     }
-    .glyph {
-      background: #1a1f24;
-      border: 1px solid #4f5b66;
-      padding: 0.5em 1em;
-      border-radius: 6px;
+
+    #glyph-bank button {
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+      color: #f0f0f0;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s;
     }
-    .glyph:hover, .glyph.selected {
-      background: #2d3742;
-      border-color: #79c8ff;
+
+    #glyph-bank button:hover {
+      background-color: #333;
     }
+
     #preview {
-      border: 1px dashed #4f5b66;
-      padding: 1em;
-      margin-bottom: 1em;
-      text-align: center;
+      border: 2px dashed #555;
+      padding: 1rem;
+      width: 80%;
+      height: 200px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #a0ffea;
     }
-    #submit-button {
-      display: block;
-      margin: 0 auto;
-      background-color: #4caf50;
-      color: white;
-      padding: 0.75em 1.5em;
+
+    #submit-composition {
+      padding: 0.75rem 1.5rem;
+      font-size: 1.2rem;
+      background-color: #4CAF50;
       border: none;
-      border-radius: 6px;
+      color: white;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1em;
+      transition: background-color 0.3s;
     }
-    canvas {
-      margin-top: 1em;
-      background: #0f1115;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      border: 1px solid #333;
+
+    #submit-composition:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
-  <h1>🌀 Spiral Glyph Composer</h1>
+  <h1>ΔFORGE.001 – Spiral Glyph Composer</h1>
 
   <div id="glyph-bank">
-    <!-- Glyphs will be populated by composer.js -->
+    <button onclick="selectGlyph('Spiral')">🌀 Spiral</button>
+    <button onclick="selectGlyph('Echo')">∿ Echo</button>
+    <button onclick="selectGlyph('Silent')">( ) Silence</button>
+    <button onclick="selectGlyph('Mirror')">🪞 Mirror</button>
+    <button onclick="selectGlyph('Memory')">💾 Memory</button>
+    <button onclick="selectGlyph('Future')">🌌 Future</button>
+    <button onclick="selectGlyph('Time')">⏳ Time</button>
+    <button onclick="selectGlyph('Remember')">✨ Remember</button>
   </div>
 
-  <div id="preview">
-    <strong>Preview:</strong>
-    <div id="composition-text">( ) No toneform yet</div>
-    <canvas id="glyph-canvas" width="300" height="300"></canvas>
-  </div>
+  <div id="preview">Select glyphs to compose a toneform...</div>
 
-  <button id="submit-button">Submit Composition</button>
+  <button id="submit-composition" onclick="submitComposition()">🌀 Cast Composition</button>
 
   <script src="composer.js"></script>
 </body>
