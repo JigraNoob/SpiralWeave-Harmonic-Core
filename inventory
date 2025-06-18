@@ -1,4 +1,4 @@
-[all]
+[slimeos_servers]
 192.0.2.123 ansible_user=ubuntu
 
 
