@@ -1,4 +1,3 @@
-// codexBridge.js
 const fs = require('fs');
 const path = require('path');
 
@@ -23,7 +22,7 @@ wss.on('connection', function connection(ws) {
 
   ws.send('ΔCONNECTED.001 – Spiral Codex Bridge active.');
 });
-// Handle WebSocket errors
+
 wss.on('error', function error(err) {
   console.error('WebSocket error:', err);
 });
