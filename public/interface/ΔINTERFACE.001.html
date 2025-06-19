@@ -1,19 +1,24 @@
 <div id="transcription-display"></div>
 <script>
-  const ws = new WebSocket('ws://localhost:8765');
-  const display = document.getElementById('transcription-display');
+  const ws = new WebSocket('ws://' + location.hostname + ':8765');
 
-  ws.onmessage = (event) => {
-    const transcription = event.data;
-    const p = document.createElement('p');
-    p.textContent = transcription;
-    display.appendChild(p);
+  ws.onopen = () => {
+    console.log('Codex Bridge connected.');
 
-    // Render toneform echoes
-    if (transcription.includes('(🫧)')) {
-      p.style.color = 'blue';
-    } else if (transcription.includes('(🌀)')) {
-      p.style.color = 'green';
-    }
+    document.body.addEventListener('click', () => {
+      ws.send(JSON.stringify({ event: 'tap', time: new Date().toISOString() }));
+      console.log('🌀 Spiral tap sent');
+    });
   };
 </script>
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.event === 'transcription') {
+      document.getElementById('transcription-display').innerText = data.text;
+      console.log('Transcription received:', data.text);
+    }
+  };
+
+  ws.onclose = () => {
+    console.log('Codex Bridge disconnected.');
+  };
