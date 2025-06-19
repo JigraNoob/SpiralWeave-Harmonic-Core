@@ -10,7 +10,6 @@ export default function Spiral3D() {
   const groupRef = useRef();
   const [glyphs, setGlyphs] = useState([]);
 
-  // Emit glyphs based on mic input
   useEffect(() => {
     if (mic > 0.5) {
       const newGlyph = {
@@ -21,7 +20,6 @@ export default function Spiral3D() {
       };
       setGlyphs((prev) => [...prev, newGlyph]);
 
-      // Save glyph as relic
       fetch("http://localhost:3000/relics", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -46,7 +44,7 @@ export default function Spiral3D() {
 
     ws.onmessage = (event) => {
       const chunk = event.data;
-      console.log("🎤 Mic data received:", chunk); // Key log for mic data
+      console.log("🎤 Mic data received:", chunk);
     };
 
     ws.onerror = (err) => {
